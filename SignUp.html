@@ -7,8 +7,43 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Turret+Road:wght@700&family=Press+Start+2P&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK versión 9 modular -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCENbkUC64WQzU3uarGyUuZnkXnlFHaKq0",
+            authDomain: "webservices-39940.firebaseapp.com",
+            projectId: "webservices-39940",
+            storageBucket: "webservices-39940.firebasestorage.app",
+            messagingSenderId: "310601153338",
+            appId: "1:310601153338:web:8217f7257c5c28d4322e03"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Manejo de registro
+        document.getElementById('signUpForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                alert("Registro exitoso! Redirigiendo...");
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+    </script>
+
     <style>
-        /* TODOS LOS ESTILOS ORIGINALES SE MANTIENEN IGUAL */
+        /* Estilos originales se mantienen igual */
         :root {
             --neon-green: #0f0;
             --neon-pink: #f0f;
@@ -132,11 +167,31 @@
             overflow: hidden;
             border: 1px solid var(--neon-green);
             box-shadow: 0 0 30px var(--neon-green);
-            /* ÚNICA MODIFICACIÓN EN ESTILOS */
             display: block;
             text-decoration: none;
             color: inherit;
             cursor: pointer;
+        }
+
+        input.glow-card {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1rem;
+            margin: 1rem auto;
+            width: 80%;
+            color: white;
+        }
+
+        button.glow-card {
+            background: rgba(0, 255, 0, 0.1);
+            transition: all 0.3s ease;
+            border: none;
+            font-family: 'Turret Road', cursive;
+            font-size: 1.2rem;
+        }
+
+        button.glow-card:hover {
+            background: rgba(0, 255, 0, 0.3);
+            transform: scale(1.05);
         }
 
         .glow-card::before {
@@ -223,7 +278,6 @@
     </style>
 </head>
 <body>
-    <!-- HEADER IDÉNTICO AL ORIGINAL -->
     <header>
         <div class="logo">AI Finance</div>
         <nav class="nav-container">
@@ -236,37 +290,17 @@
         </nav>
     </header>
 
-    <!-- MAIN CON LAS ÚNICAS MODIFICACIONES -->
     <main>
         <h2 class="neon pink">AI Finance</h2>
         <h1 class="neon turquoise">BUSINESS</h1>
-        <form action="login_action.html" method="post">
-            <input type="email" name="email" placeholder="Email" class="glow-card" required>
-            <input type="password" name="password" placeholder="Password" class="glow-card" required>
-            <button type="submit" class="glow-card">REGISTRARSE</button>
+        <form id="signUpForm">
+            <input type="email" id="email" placeholder="Email" class="glow-card" required>
+            <input type="password" id="password" placeholder="Password" class="glow-card" required>
+            <button type="submit" class="glow-card">REGISTRAR</button>
         </form>
+        <p style="margin-top: 1rem; color: var(--neon-green);">
+            Ya tienes una cuenta? <a href="Login.html" style="color: var(--neon-pink); text-decoration: none;">Iniciar Sesión aquí</a>
+        </p>
     </main>
-
-    <!-- SCRIPT IDÉNTICO AL ORIGINAL -->
-    <script>
-        const hamburger = document.createElement('div');
-        hamburger.className = 'hamburger';
-        hamburger.innerHTML = '☰';
-        document.body.appendChild(hamburger);
-
-        hamburger.addEventListener('click', () => {
-            document.querySelector('.nav-links').classList.toggle('nav-active');
-            hamburger.innerHTML = hamburger.innerHTML === '☰' ? '✕' : '☰';
-        });
-
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth < 768) {
-                    document.querySelector('.nav-links').classList.remove('nav-active');
-                    hamburger.innerHTML = '☰';
-                }
-            });
-        });
-    </script>
 </body>
 </html>
