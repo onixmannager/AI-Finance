@@ -332,7 +332,7 @@
         try {
             await signInWithEmailAndPassword(auth, email, password);
             alert("¡Inicio exitoso! Redirigiendo...");
-            window.location.href = 'analyzer.html';
+            window.location.href = 'Dashboard.html';
         } catch (error) {
             alert("Error: " + error.message);
         }
